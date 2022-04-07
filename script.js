@@ -1,62 +1,86 @@
-let cartas; 
+let cartas;
 let count = 0;
 let isOver = 0;
+let seconds =0;
 const gif_random = [];
 
-do {
-    cartas = prompt('Com quantas cartas deseja jogar?\nEscolha um número par '+
-    'entre 4 e 14!');
-} while ((cartas % 2 !== 0) || !(cartas >=4 && cartas <=14));
 
-shufflegifs();
 
-for(let i =0; i <cartas;i++) {
-    let addCards = document.querySelector('article');
-    addCards.innerHTML +=
-    `<div class = "card" onclick="flip(this)">
-     <div class= "content" onclick="fcount()"><img src="/imgs/front.png" alt="${i}"></div>
-     <div class= "content back-face"><img src="/imgs/${gif_random[i]}.gif" alt="1"></div>
-     </div>`;
-}
+setTimeout(function () {
+    do {
+        cartas = prompt('Com quantas cartas deseja jogar?\nEscolha um número par '+
+        'entre 4 e 14!');
+    } while ((cartas % 2 !== 0) || !(cartas >=4 && cartas <=14));
 
-function shufflegifs() {
-    const gifs = ['bobrossparrot','explodyparrot','fiestaparrot','metalparrot','revertitparrot','tripletsparrot','unicornparrot']
-    
     if(cartas) {
-        gif_random[0] = gifs[0];
-        gif_random[1] = gifs[0];
-    
-        gif_random[2] = gifs[1];
-        gif_random[3] = gifs[1];
-    
-        if(cartas >=6) {
-            gif_random[4] = gifs[2];
-            gif_random[5] = gifs[2];
-        }
-        if(cartas >=8) {
-            gif_random[6] = gifs[3];
-            gif_random[7] = gifs[3];
-        }
-        if(cartas >=10) {
-            gif_random[8] = gifs[4];
-            gif_random[9] = gifs[4];
-        }
-        if(cartas >=12) {
-            gif_random[10] = gifs[5];
-            gif_random[11] = gifs[5];
-        }
-        if(cartas >=14) {
-            gif_random[12] = gifs[6];
-            gif_random[13] = gifs[6];
-        }
+        document.querySelector('.background-before').classList.add('hide');
+        document.querySelector('.hide').classList.remove('hide');
+        document.querySelector('span.hide').classList.remove('hide');
+        
+        
+        if (isOver != cartas/2) {
+        setInterval(() => {
+            seconds++;
+            let stopwatch = document.querySelectorAll('.stopwatch span')[0]
+            stopwatch.innerHTML = `${seconds} s`;
+        }, 1000);   
+        }  
     }
 
-    function comparador() { 
-        return Math.random() - 0.5; 
-    } 
+    shufflegifs();
 
-    gif_random.sort(comparador);
+    for(let i =0; i <cartas;i++) {
+        let addCards = document.querySelector('article');
+        addCards.innerHTML +=
+        `<div class = "card" onclick="flip(this)">
+        <div class= "content" onclick="fcount()"><img src="/imgs/front.png" alt="${i}"></div>
+        <div class= "content back-face"><img src="/imgs/${gif_random[i]}.gif" alt="1"></div>
+        </div>`;
+    }
+
+    function shufflegifs() {
+        const gifs = ['bobrossparrot','explodyparrot','fiestaparrot','metalparrot','revertitparrot','tripletsparrot','unicornparrot']
+    
+        if(cartas) {
+            gif_random[0] = gifs[0];
+            gif_random[1] = gifs[0];
+    
+            gif_random[2] = gifs[1];
+            gif_random[3] = gifs[1];
+    
+            if(cartas >=6) {
+                gif_random[4] = gifs[2];
+                gif_random[5] = gifs[2];
+            }   
+            if(cartas >=8) {
+                gif_random[6] = gifs[3];
+                gif_random[7] = gifs[3];
+            }
+            if(cartas >=10) {
+                gif_random[8] = gifs[4];
+                gif_random[9] = gifs[4];
+            }
+        if(cartas >=12) {
+                gif_random[10] = gifs[5];
+                gif_random[11] = gifs[5];
+            }
+            if(cartas >=14) {
+                gif_random[12] = gifs[6];
+                gif_random[13] = gifs[6];
+            }
+        }
+
+        function comparador() { 
+            return Math.random() - 0.5; 
+        } 
+
+        gif_random.sort(comparador);
 }
+}, 200)
+
+
+
+
 
 function flip(element) {
     element.querySelector('.content').classList.add('front-face');
@@ -80,8 +104,10 @@ function flip(element) {
                 parent2[1].classList.remove('check');
                 isOver++;
                 if(isOver === cartas/2) {
-                    alert(`Você ganhou em ${count} jogadas!`);
-                }         
+                    alert(`Você ganhou em ${count} jogadas e em ${seconds} segundos!`);
+                    teste(); 
+                }           
+                         
             } else {
                 parent[0].style.transform = 'rotateY(180deg)'
                 parent[0].classList.remove('check');
@@ -105,6 +131,18 @@ function flip(element) {
 
 function fcount() {
     count++      
+}
+
+function teste() {
+    let restart;
+    do {
+        restart = prompt('Deseja reiniciar o jogo?\nResponda com sim ou não');
+    } while (restart !=='sim' && restart !== 'não');
+    if(restart === 'sim') {
+        location.reload();
+    } else if (restart === 'não') {
+        return;
+    }
 }
 
 
