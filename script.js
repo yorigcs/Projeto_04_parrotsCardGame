@@ -33,8 +33,8 @@ setTimeout(function () {
         let addCards = document.querySelector('article');
         addCards.innerHTML +=
         `<div class = "card" onclick="flip(this)">
-        <div class= "content" onclick="fcount()"><img src="/imgs/front.png" alt="${i}"></div>
-        <div class= "content back-face"><img src="/imgs/${gif_random[i]}.gif" alt="1"></div>
+        <div class= "content" onclick="fcount()"><img src="imgs/front.png" alt="${i}"></div>
+        <div class= "content back-face"><img src="imgs/${gif_random[i]}.gif" alt="1"></div>
         </div>`;
     }
 
